@@ -1,0 +1,24 @@
+<nav class="nav card">
+  <div class="brand">
+    <div class="logo">QA</div>
+    <div class="title">
+      <strong>Q/A Assistant</strong>
+      <span class="subtitle hide-sm">Ocean Professional</span>
+    </div>
+  </div>
+
+  <div class="search">
+    <input
+      aria-label="Search questions"
+      [(ngModel)]="query"
+      (keyup.enter)="doSearch()"
+      placeholder="Search questions, tags..."
+    />
+    <button class="ghost hide-sm" (click)="doSearch()" aria-label="Search">Search</button>
+  </div>
+
+  <div class="actions">
+    <button class="secondary" (click)="askClick.emit()" aria-label="Ask a question">Ask</button>
+    <button (click)="loginClick.emit()" aria-label="Login">Login</button>
+  </div>
+</nav>

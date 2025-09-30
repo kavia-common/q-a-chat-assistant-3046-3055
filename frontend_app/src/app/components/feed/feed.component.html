@@ -1,0 +1,28 @@
+<div class="header">
+  <h2>Questions</h2>
+  <span class="badge" *ngIf="qds.loading()">Loading...</span>
+</div>
+
+<ul class="feed">
+  <li class="feed-item card slide-up" *ngFor="let q of qds.questions()">
+    <div class="feed-item-head">
+      <h3 class="title" (click)="open(q.id)" tabindex="0">{{ q.title }}</h3>
+      <div class="meta">
+        <span class="tag" *ngFor="let t of q.tags">#{{ t }}</span>
+        <span class="spacer"></span>
+        <span class="muted">{{ q.answerCount }} answers</span>
+      </div>
+    </div>
+    <p class="body">{{ q.body }}</p>
+    <div class="foot">
+      <div class="author">
+        <div class="avatar">{{ (q.author?.displayName || 'U')[0] }}</div>
+        <div>
+          <div class="name">{{ q.author?.displayName || 'Unknown' }}</div>
+          <div class="when">{{ q.createdAt | date:'short' }}</div>
+        </div>
+      </div>
+      <button class="ghost" (click)="open(q.id)">Open</button>
+    </div>
+  </li>
+</ul>

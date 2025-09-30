@@ -1,0 +1,23 @@
+<div class="chat-wrap">
+  <div class="chat-head">
+    <h3>Assistant</h3>
+    <div class="actions">
+      <button class="ghost" (click)="chat.clear()" aria-label="Clear chat">Clear</button>
+    </div>
+  </div>
+
+  <div class="chat-body">
+    <div *ngFor="let m of chat.messages()" class="msg" [class.user]="m.role==='user'" [class.assistant]="m.role==='assistant'">
+      <div class="bubble">
+        <div class="role" *ngIf="m.role!=='user'">AI</div>
+        <div class="content">{{ m.content }}</div>
+      </div>
+    </div>
+    <div *ngIf="chat.busy()" class="typing">Assistant is typing...</div>
+  </div>
+
+  <div class="chat-input">
+    <input [(ngModel)]="input" (keyup.enter)="send()" placeholder="Ask something..." aria-label="Ask something" />
+    <button (click)="send()" [disabled]="chat.busy()">Send</button>
+  </div>
+</div>

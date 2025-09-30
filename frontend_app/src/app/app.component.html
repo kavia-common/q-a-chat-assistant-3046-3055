@@ -1,3 +1,40 @@
-<div class="container">
-  <h1>{{ title }}</h1>
+<div class="container-app">
+  <!-- Top Navigation -->
+  <app-top-nav
+    (loginClick)="openLogin()"
+    (askClick)="openAskQuestion()"
+    (searchChange)="onSearch($event)">
+  </app-top-nav>
+
+  <!-- Content Row -->
+  <div style="display: grid; grid-template-columns: 72px 1fr 380px; gap: 16px; padding: 16px;">
+    <!-- Left Sidebar Shortcuts -->
+    <app-sidebar (shortcut)="onSidebarShortcut($event)"></app-sidebar>
+
+    <!-- Main Feed -->
+    <main class="card" style="padding: 16px; min-height: 60vh;">
+      <app-feed
+        [query]="searchQuery"
+        (openQuestion)="openQuestionDetail($event)">
+      </app-feed>
+    </main>
+
+    <!-- Chat Panel -->
+    <aside class="card hide-sm" style="padding: 16px; min-height: 60vh;">
+      <app-chat-panel></app-chat-panel>
+    </aside>
+  </div>
+
+  <!-- Modals -->
+  <app-login-modal
+    [open]="loginOpen"
+    (close)="loginOpen=false"
+    (submit)="handleLogin($event)">
+  </app-login-modal>
+
+  <app-question-modal
+    [open]="askOpen"
+    (close)="askOpen=false"
+    (submit)="submitQuestion($event)">
+  </app-question-modal>
 </div>

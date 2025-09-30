@@ -1,0 +1,16 @@
+.sidebar {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: stretch;
+  min-height: 60vh;
+}
+
+.sidebar button {
+  height: 46px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  background: #f8fafc;
+}
+.sidebar button:hover { background: #f3f4f6; }
