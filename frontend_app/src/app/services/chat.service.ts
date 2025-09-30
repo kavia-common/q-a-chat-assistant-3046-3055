@@ -35,15 +35,29 @@ export class ChatService {
     };
     this.messages.update(m => [...m, userMsg]);
     this.busy.set(true);
-    this.api.askLLM({ prompt }).subscribe(res => {
-      const assistant: ChatMessage = {
-        id: `m_${Math.random().toString(36).slice(2,9)}`,
-        role: 'assistant',
-        content: res.answer,
-        createdAt: new Date().toISOString()
-      };
-      this.messages.update(m => [...m, assistant]);
-      this.busy.set(false);
+
+    this.api.askLLM({ prompt }).subscribe({
+      next: (res) => {
+        const assistant: ChatMessage = {
+          id: `m_${Math.random().toString(36).slice(2,9)}`,
+          role: 'assistant',
+          content: res.answer || 'No answer returned from the model.',
+          createdAt: new Date().toISOString()
+        };
+        this.messages.update(m => [...m, assistant]);
+        this.busy.set(false);
+      },
+      error: (error: Error) => {
+        console.error('[ChatService] askLLM error:', error);
+        const assistantErr: ChatMessage = {
+          id: `m_${Math.random().toString(36).slice(2,9)}`,
+          role: 'assistant',
+          content: `Sorry, I couldn't complete that request. ${error.message || 'Please try again.'}`,
+          createdAt: new Date().toISOString()
+        };
+        this.messages.update(m => [...m, assistantErr]);
+        this.busy.set(false);
+      }
     });
   }
 
